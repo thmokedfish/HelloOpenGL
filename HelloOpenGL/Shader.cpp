@@ -35,26 +35,6 @@ Shader::~Shader()
 {
 	glDeleteShader(ID);
 }
-void Shader::setBool(const std::string& name, bool value) const
-{
-	int uniformVal = glGetUniformLocation(ID, name.c_str());
-	glUniform1i(uniformVal, value);
-}
-void Shader::setFloat(const std::string& name, float value) const
-{
-	int uniformVal = glGetUniformLocation(ID, name.c_str());
-	glUniform1f(uniformVal, value);
-}
-void Shader::setInt(const std::string& name, int value) const
-{
-	int uniformVal = glGetUniformLocation(ID, name.c_str());
-	glUniform1i(uniformVal, value);
-}
-
-void Shader::use()
-{
-	glUseProgram(ID);
-}
 
 unsigned int getVertexShader(const char* filename)
 {

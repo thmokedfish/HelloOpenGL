@@ -5,8 +5,7 @@
 #include<iostream>
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-void InitVertex(unsigned int* indeices, int icount, GLuint& VAO, GLuint& VBO, GLuint& EBO);
-void CompileShader(std::string vertexFilename, std::string fragFilename, GLuint& shaderProgram);
+void InitVertex(unsigned int* indices, int icount, GLuint& VAO, GLuint& VBO, GLuint& EBO);
 
 
 //顶点数组
@@ -26,13 +25,10 @@ float vertexColor[] =
 	0.0f,0.0f,1.0f
 };
 //索引数组
-unsigned int indeices[] = { 0,1,4 };
-unsigned int indeices2[] = { 3,4,2 };
+unsigned int indices[] = { 0,1,4 };
+unsigned int indices2[] = { 3,4,2 };
 int main()
 {
-	
-	
-
 	glfwInit(); 
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -65,8 +61,8 @@ int main()
 	unsigned int VAO,VBO,EBO;
 	unsigned int VAO2;
 	//记得修改数组大小时修改传入的int参数
-	InitVertex(indeices,1,VAO, VBO, EBO);
-	InitVertex(indeices2,1,VAO2,VBO, EBO);
+	InitVertex(indices,1,VAO, VBO, EBO);
+	InitVertex(indices2,1,VAO2,VBO, EBO);
 	
 	Shader timechangeShader("VertexShader", "FragmentShader");
 	Shader blueShader("VertexShader", "FragmentShader2");
@@ -101,7 +97,7 @@ int main()
 }
 
 
-void InitVertex(unsigned int* indeices, int icount, GLuint& VAO, GLuint& VBO, GLuint& EBO)
+void InitVertex(unsigned int* indices, int icount, GLuint& VAO, GLuint& VBO, GLuint& EBO)
 {
 	//从绑定之后起，我们应该绑定和配置对应的VBO和属性指针，之后解绑VAO供之后使用
 	//也可以不显式解绑，因为在其他地方使用时会绑定到其他VAO
@@ -111,7 +107,7 @@ void InitVertex(unsigned int* indeices, int icount, GLuint& VAO, GLuint& VBO, GL
 	glGenBuffers(1, &EBO);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	//参数查阅md
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 3 * icount, indeices, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 3 * icount, indices, GL_STATIC_DRAW);
 
 	//用id=1生成一个VBO对象
 	glGenBuffers(1, &VBO);
