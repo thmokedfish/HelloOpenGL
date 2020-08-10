@@ -151,10 +151,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\GLAD\glad\src\glad.c" />
+    <ClCompile Include="DrawObj.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="TestObj.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DrawObj.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

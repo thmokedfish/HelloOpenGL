@@ -3,7 +3,7 @@
 
 
 
-DrawObj::DrawObj(Shader* shader,GLenum usage=GL_DYNAMIC_DRAW)
+DrawObj::DrawObj(Shader* shader,GLenum usage)
 	:shader(shader),usage(usage)
 {
 	glGenVertexArrays(1, &VAO);
@@ -16,10 +16,8 @@ void DrawObj::ReSetShader(Shader* shader)
 
 void DrawObj::BindVertex(GLuint location,float vertices[],int vcount)
 {
-	unsigned int VBO;
 	glBindVertexArray(VAO);
 	glGenBuffers(1, &VBO);
-	std::cout<<"VBO"<<VBO<<std::endl;
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 3 * vcount, vertices, usage);
 
@@ -29,10 +27,8 @@ void DrawObj::BindVertex(GLuint location,float vertices[],int vcount)
 
 void DrawObj::BindElement(unsigned int indices[],int icount)
 {
-	unsigned int EBO;
 	glBindVertexArray(VAO);
 	glGenBuffers(1, &EBO);
-	std::cout << "EBO" << EBO << std::endl;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(unsigned int) * 3 * icount, indices, usage);
 }
@@ -40,6 +36,7 @@ void DrawObj::BindElement(unsigned int indices[],int icount)
 
 void DrawObj::Draw()
 {
+	shader->use();
 	OnDraw();
 	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
