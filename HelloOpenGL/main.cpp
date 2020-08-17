@@ -4,21 +4,9 @@
 #include<fstream>
 #include<iostream>
 #include"DrawObj.h"
-class TestObj :public DrawObj
-{
-public:
-	TestObj(Shader* shader, GLenum usage = GL_DYNAMIC_DRAW):DrawObj(shader,usage)
-	{}
-	void OnDraw() override
-	{
-		float time = glfwGetTime();
-		float greenValue = (sin(time) / 2.0f) + 0.5f;
-		this->shader->setFloat("unifCol", greenValue);
-	}
-};
+#include"TestObj.h"
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-void InitVertex(unsigned int* indices, int icount, GLuint& VAO, GLuint& VBO, GLuint& EBO);
 
 int main()
 {
@@ -54,31 +42,37 @@ int main()
 	//顶点数组
 	float vertices[] =
 	{
-	  0.5f, 0.5f, 0.0f,
-	0.5f, -0.5f, 0.0f,
-	-0.5f,0.0f, 0.0f,
-	0.0f,0.5f, 0.0f,
-	0.0f,0.0f, 0.0f
+	  -0.5f,- 0.5f, 0.0f,
+	  0.5f, -0.5f, 0.0f,
+	  0.0f,0.5f, 0.0f,
+	  0.0f,0.1f, 0.0f,
+	  0.0f,0.0f, 0.0f
 	};
 
 	float vertexColor[] =
 	{
 		1.0f,0.0f,0.0f,
 		0.0f,1.0f,0.0f,
-		0.0f,0.0f,1.0f
+		0.0f,0.0f,1.0f,
+		0.0f,0.0f,0.0f,
+		0.0f,0.0f,0.0f
 	};
 	//索引数组
-	unsigned int indices[] = { 0,1,4 };
+	unsigned int indices[] = { 0,1,2 };
 	unsigned int indices2[] = { 3,4,2 };
 	
 	Shader timechangeShader("VertexShader", "FragmentShader");
-	Shader blueShader("VertexShader", "FragmentShader2");
-	DrawObj obj(&blueShader);
-	obj.BindVertex(0, vertices, 5);
+	Shader colorShader("VertexShader", "FragmentShader2");
+	colorShader.use();
+	colorShader.setValue("move", 0.5f);
+	DrawObj obj(&colorShader);
+	obj.BindArrayBuffer(0, vertices, 5);
+	obj.BindArrayBuffer(1, vertexColor, 5);
 	obj.BindElement(indices, 1);
-	TestObj changing(&timechangeShader);
-	changing.BindVertex(0, vertices, 5);
-	changing.BindElement(indices2, 1);
+	
+	//TestObj changing(&timechangeShader);
+	//changing.BindVertex(0, vertices, 5);
+	//changing.BindElement(indices2, 1);
 
 	while (!glfwWindowShouldClose(window))
 	{
@@ -86,12 +80,11 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT);//clear
 
 		obj.Draw();
-		changing.Draw();
+		//changing.Draw();
 
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
-	//glDeleteBuffers(1, &VBO);
 
 	glfwTerminate();
 

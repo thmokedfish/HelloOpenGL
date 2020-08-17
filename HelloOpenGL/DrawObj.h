@@ -7,11 +7,12 @@ public:
 	DrawObj(Shader* shader, GLenum usage = GL_DYNAMIC_DRAW);
 	~DrawObj()
 	{
-		glDeleteVertexArrays(1, &VAO); 
+		glDeleteVertexArrays(1, &VAO);
 		glDeleteBuffers(1, &VBO);
+
 	}
-	void ReSetShader(Shader* shader);
-	void BindVertex(GLuint location, float verteices[],int vcount);
+	void SetShader(Shader* shader);
+	void BindArrayBuffer(GLuint location, float verteices[],int vcount);
 	void BindElement(unsigned int indeices[],int icount);
 	virtual void OnDraw(){}//可在其中设定shader及传入的uniform
 	void Draw();

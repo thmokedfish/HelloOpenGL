@@ -4,17 +4,17 @@
 
 
 DrawObj::DrawObj(Shader* shader,GLenum usage)
-	:shader(shader),usage(usage)
+	:shader(shader),usage(usage),EBO(0),VBO(0)
 {
 	glGenVertexArrays(1, &VAO);
 }
 
-void DrawObj::ReSetShader(Shader* shader)
+void DrawObj::SetShader(Shader* shader)
 {
 	this->shader = shader;
 }
 
-void DrawObj::BindVertex(GLuint location,float vertices[],int vcount)
+void DrawObj::BindArrayBuffer(GLuint location,float vertices[],int vcount)
 {
 	glBindVertexArray(VAO);
 	glGenBuffers(1, &VBO);
